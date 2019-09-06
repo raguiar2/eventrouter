@@ -181,11 +181,14 @@ func ManufactureSink() (e EventSinkInterface) {
 		}
 		return influx
 	case "rockset":
+		rocksetServer := viper.GetString("rocksetServer")
+		if rocksetServer == "" {
+			panic("Rockset sink specified but rocksetServer not specified")
+		}
 		rocksetAPIKey := viper.GetString("rocksetAPIKey")
 		if rocksetAPIKey == "" {
 			panic("Rockset sink specified but rocksetAPIKey not specified")
 		}
-
 		rocksetCollectionName := viper.GetString("rocksetCollectionName")
 		if rocksetCollectionName == "" {
 			panic("Rockset sink specified but rocksetCollectionName not specified")
@@ -194,7 +197,7 @@ func ManufactureSink() (e EventSinkInterface) {
 		if rocksetCollectionName == "" {
 			panic("Rockset sink specified but rocksetWorkspaceName not specified")
 		}
-		e = NewRocksetSink(rocksetAPIKey, rocksetCollectionName, rocksetWorkspaceName)
+		e = NewRocksetSink(rocksetServer, rocksetAPIKey, rocksetCollectionName, rocksetWorkspaceName)
 	// case "logfile"
 	default:
 		err := errors.New("Invalid Sink Specified")

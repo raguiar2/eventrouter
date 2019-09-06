@@ -41,8 +41,8 @@ type RocksetSink struct {
 
 // NewRocksetSink will create a new RocksetSink with default options, returned as
 // an EventSinkInterface
-func NewRocksetSink(rocksetAPIKey string, rocksetCollectionName string, rocksetWorkspaceName string) EventSinkInterface {
-	client := apiclient.Client(rocksetAPIKey, "https://api.rs2.usw2.rockset.com")
+func NewRocksetSink(rocksetServer string, rocksetAPIKey string, rocksetCollectionName string, rocksetWorkspaceName string) EventSinkInterface {
+	client := apiclient.Client(rocksetAPIKey, rocksetServer)
 	return &RocksetSink{
 		client:                client,
 		rocksetCollectionName: rocksetCollectionName,
